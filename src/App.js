@@ -1,26 +1,47 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Axios from 'axios';
 import logo from './logo.svg';
 import './App.css';
+import VideoData from './VideoCard';
 
-function App() {
+class App extends Component {
+
+  state={
+    videoList:[]
+  }
+
+componentDidMount(){
+  Axios.get('https://5d76bf96515d1a0014085cf9.mockapi.io/playlist')
+  .then((response)=>{
+      this.setState({videoList:[...response.data]})
+  })
+  .catch((err)=>{
+
+  })
+
+}
+
+render(){
+
+  const videoCards= this.state.videoList.map((item,pos)=>{
+
+    return(
+      <VideoData videoThumb={item.thumbnail} videoTitle={item.title} key={pos}/>
+    )
+         
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    <div>
+      {videoCards}
+
     </div>
   );
+
+}
+
+ 
 }
 
 export default App;

@@ -7,13 +7,14 @@ import VideoData from './VideoCard';
 class App extends Component {
 
   state={
-    videoList:[]
+    videoList:[],
+    showLoader:true
   }
 
 componentDidMount(){
   Axios.get('https://5d76bf96515d1a0014085cf9.mockapi.io/playlist')
   .then((response)=>{
-      this.setState({videoList:[...response.data]})
+      this.setState({videoList:[...response.data], showLoader:false })
   })
   .catch((err)=>{
 
@@ -34,7 +35,9 @@ render(){
   return (
 
     <div>
-      {videoCards}
+      <h1>Video List</h1>
+      {/* {videoCards} */}
+      {this.state.showLoader ? <h1>Loading...</h1> : videoCards }
 
     </div>
   );
